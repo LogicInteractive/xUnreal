@@ -1,0 +1,15 @@
+-cp Haxe/src
+-cp _hxlib
+-main HxUnrealMain
+--cpp Binaries/haxe_build
+--dce full
+-D HXCPP_M64
+
+# --dce full
+#-D dll_link
+# -D HaxeCBridge.name=HaxeGenerated
+-D ABI=-MD
+-D static_link
+# -D HXCPP_VERBOSE
+--macro include("unreal",true)
+# --cmd build.bat

@@ -1,0 +1,104 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "d",
+			"type": "shell",
+			"command": "haxe",
+			"args": [
+				"build.hxml",
+				"-debug",
+				"-lib",
+				"hxcpp-debug-server"
+			],
+			"problemMatcher": [
+				"$haxe-absolute",
+				"$haxe",
+				"$haxe-error",
+				"$haxe-trace"
+			]
+		},
+		{
+			"label": "Build (Debug)",
+			"type": "shell",
+			"command": "xcopy",
+			"isBackground": true,
+			"args": [
+				"bin\\build\\*.exe",
+				"bin",
+				"/d",
+				"/y",
+				"/q"
+			],
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false,
+			},
+			"group": "build",
+			"dependsOn": [
+				"d"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Build Haxe",
+			"type": "shell",
+			"command": "haxe",
+			"args": [
+				"build.hxml"
+			],
+			"problemMatcher": [
+				"$haxe-absolute",
+				"$haxe",
+				"$haxe-error",
+				"$haxe-trace"
+			]
+		},
+		{
+			"label": "Build Haxe + Unreal",
+			"type": "shell",
+			"command": "${workspaceFolder}/build.bat",
+			"isBackground": true,
+			"args": [
+			],
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"group": "build",
+			"dependsOn": [
+				"Build Haxe"
+			],			
+			"problemMatcher": []
+		},
+		{
+			"label": "Build Unreal",
+			"type": "shell",
+			"command": "${workspaceFolder}/build.bat",
+			"isBackground": true,
+			"args": [
+			],
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"group":{
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		}
+	]
+}

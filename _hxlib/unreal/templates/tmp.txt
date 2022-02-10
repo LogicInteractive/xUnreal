@@ -1,0 +1,9 @@
+public:
+UFUNCTION(BlueprintPure, BlueprintInternalUseOnly)
+int32 GetValue() const { return Value; }
+UFUNCTION(BlueprintCallable, BlueprintInternalUseOnly)
+void SetValue(const int32 val) { Value = val;}
+
+private:
+UPROPERTY(BlueprintGetter=GetValue, BlueprintSetter=SetValue)
+int32 Value;

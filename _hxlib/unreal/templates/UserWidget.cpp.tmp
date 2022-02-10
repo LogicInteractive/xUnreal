@@ -1,0 +1,20 @@
+#include "{className}.h"
+
+void {$prefix}{className}::NativeConstruct()
+{
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+	if (!hxInst)
+    {
+        hxInst = {$hxMainClass}_{className}_new();
+        {$hxMainClass}_unreal_UWidget_setOwner(hxInst, this);
+    }
+
+    if (hxInst)
+        {$hxMainClass}_unreal_UserWidget_NativeConstruct(hxInst);
+
+	Super::NativeConstruct();
+}
+
+{$exposedMethods}

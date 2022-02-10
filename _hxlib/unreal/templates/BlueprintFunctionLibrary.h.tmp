@@ -1,0 +1,17 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
+#include <../_hxlib/HxUnreal.h>
+#include "{className}.generated.h"
+
+UCLASS()
+class {$prefix}{className} : public {$prefix}{$superClass}
+{
+	GENERATED_UCLASS_BODY()
+	
+{$exposedMethods}
+
+private:
+	static HaxeObject hxInst;
+};

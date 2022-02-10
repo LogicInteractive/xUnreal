@@ -1,0 +1,27 @@
+{
+	"version": "0.2.0",
+	"configurations":
+    [
+        {
+            "name": "Build + debug",
+            "type": "hxcpp",
+            "request": "launch",
+            "preLaunchTask": "Build (Debug)",
+            "program": "${workspaceFolder}/bin/Main-debug.exe"
+        },
+        {
+            "name": "Build + run",
+            "type": "hxcpp",
+            "request": "launch",
+            "preLaunchTask": "Build (Release)",
+            "program": "${workspaceFolder}/bin/Main.exe"
+        },
+        {
+            "name": "Debug only",
+            "type": "hxcpp",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Main-debug.exe"
+        }
+	]
+}
+

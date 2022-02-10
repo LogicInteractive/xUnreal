@@ -1,0 +1,9 @@
+.git
+.vs
+.vscode
+assets
+Binaries
+DerivedDataCache
+Intermediate
+Saved
+Script

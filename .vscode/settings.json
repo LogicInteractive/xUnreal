@@ -1,0 +1,18 @@
+{
+  "haxe.configurations": [],
+  "editor.codeActionsOnSave": {
+    "source.sortImports": true
+  },
+  "haxe.displayServer": {
+    "arguments": [
+      "-v"
+    ]
+  },
+  "files.exclude": {
+    "DerivedDataCache": true,
+    "Intermediate": true,
+    "Content": true,
+    "Config": true,
+    "Saved": true
+  }
+}

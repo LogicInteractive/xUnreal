@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"name": "Ue_Hx",
+			"path": "."
+		},
+		{
+			"name": "UE4",
+			"path": "E:\\Unreal\\UE_4.27"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"files.associations": {
+			"vector": "cpp",
+			"xutility": "cpp"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	}
+}

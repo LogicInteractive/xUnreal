@@ -1,0 +1,42 @@
+#include "{className}.h"
+
+void {$prefix}{className}::BeginPlay()
+{
+    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bStartWithTickEnabled = true;
+
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+	if (!hxInst)
+    {
+        hxInst = {$hxMainClass}_{className}_new();
+        {$hxMainClass}_unreal_Actor_setOwner(hxInst, this);
+    }
+
+    if (hxInst)
+        {$hxMainClass}_unreal_Actor_BeginPlay(hxInst);
+
+    Super::BeginPlay();
+}
+
+void {$prefix}{className}::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    if (hxInst)
+        {$hxMainClass}_unreal_Actor_EndPlay(hxInst);
+
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+    Super::EndPlay(EndPlayReason);
+}
+
+void {$prefix}{className}::Tick(float DeltaSeconds)
+{
+    if (hxInst)
+    {
+        {$hxMainClass}_unreal_Actor_Tick(hxInst,DeltaSeconds);
+    }
+
+    Super::Tick(DeltaSeconds);
+}
