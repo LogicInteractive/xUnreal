@@ -10,8 +10,9 @@ This project aims to be able to:
  - Be portable and be able to compile the Unreal project without having Haxe or the Haxe source code
  - Work with any version of Unreal Engine
  - Be extendable
- - Be fast and easy to work with
+ - Be fast, convenient and easy to work with
  - Provide optional simplified actions for easier Unreal development
+ - Use hxcpp with Unreal to make Haxe code run at native speed
 
 There are limitations in play for now here; communication between Haxe code and Unreal is somewhat basic yet. Unreal types and classes needs manual glue templates to interface and only basic types will work for now, but there are workarounds and this will improve over time. Also, macro generated glue code is needed.
 
