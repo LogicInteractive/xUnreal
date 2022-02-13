@@ -3,6 +3,7 @@ package unreal;
 import cpp.ConstCharStar;
 import cpp.ConstCharStar;
 import cpp.NativeString;
+import unreal.UeExt;
 
 class GEngine extends unreal.UExposed
 {

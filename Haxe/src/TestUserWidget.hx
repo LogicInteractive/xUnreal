@@ -1,7 +1,8 @@
 package;
 
 import unreal.*;
-import unreal.UeExt.GEngineExt;
+import unreal.UeExt;
+import unreal.UserWidget;
 
 @:keep
 class TestUserWidget extends unreal.UserWidget

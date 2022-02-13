@@ -6,17 +6,23 @@ import cpp.ConstCharStar;
 import cpp.Float32;
 import cpp.Float64;
 import cpp.NativeString;
+import cpp.Pointer;
 import unreal.GEngine;
 import unreal.types.Transform;
 import unreal.types.Vector3;
 
 @:nogenerate 
+@:cppFileCode('
+void _setActorLocation(void* p,double x,double y,double z);
+void _setActorRotation(void* p,double x,double y,double z);
+void _setActorScale3D(void* p,double x,double y,double z);
+')
 @:autoBuild(HxUnreal.buildTemplates("AActor"))
 class Actor extends UObject
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	var owner		: cpp.Star<cpp.Void>;
+	var owner		: cpp.Pointer<cpp.Void>;
 
 	@:isVar public var x(get,set)					: Float;
 	@:isVar public var y(get,set)					: Float;
@@ -36,7 +42,7 @@ class Actor extends UObject
 	@:noCompletion
 	public function setOwner(owner:cpp.Star<cpp.Void>)
 	{
-		this.owner = owner;
+		this.owner = Pointer.fromStar(owner);
 	}
 
 	public function new()
@@ -60,7 +66,7 @@ class Actor extends UObject
 
 	public function setActorLocation(x:Float,y:Float,z:Float)
 	{
-		UeExt._setActorLocation(this.owner,x,y,z);
+		_setActorLocation(this.owner.ptr,x,y,z);
 
 		actorTransform.Translation.x = x;
 		actorTransform.Translation.y = y;
@@ -69,7 +75,7 @@ class Actor extends UObject
 
 	public function setActorRotation(x:Float,y:Float,z:Float)
 	{
-		UeExt._setActorRotation(this.owner,x,y,z);
+		_setActorRotation(this.owner.ptr,x,y,z);
 
 		actorTransform.Rotation.x = x;
 		actorTransform.Rotation.y = y;
@@ -78,7 +84,7 @@ class Actor extends UObject
 
 	public function setActorScale3D(x:Float,y:Float,z:Float)
 	{
-		UeExt._setActorScale3D(this.owner,x,y,z);
+		_setActorScale3D(this.owner.ptr,x,y,z);
 
 		actorTransform.Scale3D.x = x;
 		actorTransform.Scale3D.y = y;
@@ -180,6 +186,17 @@ class Actor extends UObject
 	{
 		actorTransform = transform;
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@:native("_setActorLocation")
+	extern public static function _setActorLocation(owner:cpp.Star<cpp.Void>,x:Float,y:Float,z:Float):Void;
+
+	@:native("_setActorRotation")
+	extern public static function _setActorRotation(owner:cpp.Star<cpp.Void>,x:Float,y:Float,z:Float):Void;
+
+	@:native("_setActorScale3D")
+	extern public static function _setActorScale3D(owner:cpp.Star<cpp.Void>,x:Float,y:Float,z:Float):Void;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 }

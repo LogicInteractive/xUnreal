@@ -6,14 +6,14 @@ class UWidget extends unreal.UObject
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	var owner		: cpp.Star<cpp.Void>;
+	var owner		: cpp.Pointer<cpp.Void>;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@:noCompletion
 	public function setOwner(owner:cpp.Star<cpp.Void>)
 	{
-		this.owner = owner;
+		this.owner = cpp.Pointer.fromStar(owner);
 	}
 
 	public function new()

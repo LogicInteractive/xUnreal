@@ -1,5 +1,7 @@
 package unreal;
 
+import unreal.UWidget;
+
 @:nogenerate
 class UserWidget extends unreal.UWidget
 {
