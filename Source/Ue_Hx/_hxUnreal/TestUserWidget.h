@@ -21,6 +21,8 @@ public:
 	float getSomeFloat();
 	UFUNCTION(BlueprintPure, CallInEditor, Category = "hxUnreal")
 	bool getSomeBool();
+	UFUNCTION(BlueprintCallable, CallInEditor, Category = "hxUnreal")
+	FString tommyTest();
 
 
 private:

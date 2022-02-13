@@ -1,7 +1,6 @@
 package;
 
 import unreal.*;
-import unreal.UeExt;
 import unreal.UserWidget;
 
 @:keep
@@ -17,9 +16,6 @@ class TestUserWidget extends unreal.UserWidget
 	override public function NativeConstruct()
 	{
 		trace("Hello widget!! ================= >> ");
-
-		// GEngineExt.AddOnScreenDebugMessage();
-		// GEngineExt.AddOnScreenDebugMessage(1, 20.0, null, cast "Hello crazy" ,true, null);
 	}	
 
 	@:ufunction(BlueprintPure)
@@ -44,6 +40,12 @@ class TestUserWidget extends unreal.UserWidget
 	public function getSomeBool():Bool
 	{
 		return Math.random()>0.5;
+	}
+
+	@:ufunction(BlueprintCallable,CallInEditor)
+	public function tommyTest():String
+	{
+		return "Tommy liker ikke sopp!!! ...";
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

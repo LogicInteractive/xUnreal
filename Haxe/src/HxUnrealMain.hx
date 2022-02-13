@@ -7,8 +7,6 @@ import TestBPFuncLib;
 import TestLevel2;
 import TestUserWidget;
 import unreal.Actor;
-import unreal.UExposed;
-import unreal.UeExt;
 
 class HxUnrealMain extends unreal.UExposed
 {

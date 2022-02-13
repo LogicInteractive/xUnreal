@@ -33,3 +33,7 @@ bool UTestUserWidget::getSomeBool()
 {
 	return (HxUnrealMain_TestUserWidget_getSomeBool(hxInst));
 }
+FString UTestUserWidget::tommyTest()
+{
+	return _HaxeStringToFString(HxUnrealMain_TestUserWidget_tommyTest(hxInst));
+}

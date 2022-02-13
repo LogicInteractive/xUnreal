@@ -4,25 +4,16 @@ import cpp.ConstCharStar;
 import cpp.ConstCharStar;
 import cpp.NativeString;
 
+@:cppFileCode('
+double _getTimeSeconds();
+')
 class World extends unreal.UExposed
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	static var getTimeSecondsCB				: cpp.Callable<Void->Float>;
-
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	static public function init(getTimeSecondsCB:cpp.Callable<Void->Float>)
-	{
-		World.getTimeSecondsCB = getTimeSecondsCB;
-	}
-
 	static public function getTimeSeconds():Float
 	{
-		if (getTimeSecondsCB!=null)
-			return getTimeSecondsCB();
-		else
-			return 0;
+		return untyped __cpp__('_getTimeSeconds()');
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
