@@ -2,8 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include <../_hxlib/HxUnreal.h>
+#include <../_hxlib/xUnreal.h>
 #include "{className}.generated.h"
+
+{$disclaimer}
 
 UCLASS()
 class {$prefix}{className} : public {$prefix}{$superClass}

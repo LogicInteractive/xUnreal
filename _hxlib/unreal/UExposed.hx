@@ -1,6 +1,6 @@
 package unreal;
 
-@:autoBuild(HaxeCBridge.expose())
+@:nogenerate
 class UExposed
 {
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -11,3 +11,12 @@ class UExposed
 
 	/////////////////////////////////////////////////////////////////////////////////////
 }
+
+@:autoBuild(XUnreal.buildTemplates("U"))
+interface UClass{}
+
+@:autoBuild(XUnreal.buildTemplates("A"))
+interface AClass{}
+
+@:autoBuild(HaxeCBridge.expose())
+interface Bridge{}

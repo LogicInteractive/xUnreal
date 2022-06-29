@@ -1,7 +1,11 @@
 #include "{className}.h"
 
+{$disclaimer}
+
 void {$prefix}{className}::NativeConstruct()
 {
+	Super::NativeConstruct();
+
     if (hxInst)
         {$hxMainClass}_releaseHaxeObject(hxInst); 
 
@@ -13,8 +17,46 @@ void {$prefix}{className}::NativeConstruct()
 
     if (hxInst)
         {$hxMainClass}_unreal_UserWidget_NativeConstruct(hxInst);
+}
 
-	Super::NativeConstruct();
+void {$prefix}{className}::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+
+    if (hxInst)
+    {
+        {$hxMainClass}_unreal_UserWidget_NativeOnInitialized(hxInst);
+    }
+}
+
+void {$prefix}{className}::NativePreConstruct()
+{
+	Super::NativePreConstruct();
+
+    if (hxInst)
+    {
+        {$hxMainClass}_unreal_UserWidget_NativePreConstruct(hxInst);
+    }
+}
+
+void {$prefix}{className}::NativeDestruct()
+{
+	Super::NativeDestruct();
+
+    if (hxInst)
+    {
+        {$hxMainClass}_unreal_UserWidget_NativeDestruct(hxInst);
+    }
+}
+
+void {$prefix}{className}::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	Super::NativeTick(MyGeometry,InDeltaTime);
+
+    if (hxInst)
+    {
+        {$hxMainClass}_unreal_UserWidget_NativeTick(hxInst,InDeltaTime);
+    }
 }
 
 {$exposedMethods}

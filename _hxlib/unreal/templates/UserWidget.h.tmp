@@ -2,16 +2,27 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include <../_hxlib/HxUnreal.h>
+#include <../_hxlib/xUnreal.h>
 #include "{className}.generated.h"
+
+{$disclaimer}
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE( FTestDelegate );
 
 UCLASS(Abstract)
 class {$prefix}{className} : public {$prefix}{$superClass}
 {
 	GENERATED_BODY()
 	
-public:   
+public:
 	virtual void NativeConstruct() override;
+	virtual void NativeOnInitialized() override;
+	virtual void NativePreConstruct() override;
+	virtual void NativeDestruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "xUnreal")
+	FTestDelegate HxTestDelegate;
 
 {$exposedMethods}
 

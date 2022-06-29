@@ -47,7 +47,7 @@
 		{
 			"label": "Build Haxe",
 			"type": "shell",
-			"command": "haxe",
+			"command": "${workspaceFolder}/_hxlib/tools/haxe/haxe.exe",
 			"args": [
 				"build.hxml"
 			],
@@ -61,18 +61,15 @@
 		{
 			"label": "Build Haxe + Unreal",
 			"type": "shell",
-			"command": "${workspaceFolder}/build.bat",
+			"command": "${workspaceFolder}/_hxlib/tools/haxe/haxe.exe",
 			"isBackground": true,
 			"args": [
+				"-cp",
+				"_hxlib/tools/build/",
+				"--interp",
+				"-main",
+				"UnrealBuild"
 			],
-			"presentation": {
-				"echo": false,
-				"reveal": "silent",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": false
-			},
 			"group": "build",
 			"dependsOn": [
 				"Build Haxe"
@@ -82,9 +79,14 @@
 		{
 			"label": "Build Unreal",
 			"type": "shell",
-			"command": "${workspaceFolder}/build.bat",
+			"command": "${workspaceFolder}/_hxlib/tools/haxe/haxe.exe",
 			"isBackground": true,
 			"args": [
+				"-cp",
+				"_hxlib/tools/build/",
+				"--interp",
+				"-main",
+				"UnrealBuild"
 			],
 			"presentation": {
 				"echo": false,

@@ -101,9 +101,12 @@ class HaxeCBridge {
 	}
 
 	static public function expose(?namespace: String) {
+
 		var clsRef = Context.getLocalClass(); 
 		var cls = clsRef.get();
 		var fields = Context.getBuildFields();
+
+		// trace("haxeCBridge: "+clsRef);
 
 		if (libName == null) {
 			// if we cannot determine a libName from --main or -D, we use the first exposed class

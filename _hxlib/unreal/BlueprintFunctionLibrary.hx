@@ -1,8 +1,10 @@
 package unreal;
 
+import unreal.UExposed.Bridge;
+import unreal.UExposed.UClass;
+
 @:nogenerate
-@:autoBuild(HxUnreal.buildTemplates("UBPFunctionLibrary"))
-class BlueprintFunctionLibrary extends unreal.UObject
+class BlueprintFunctionLibrary extends unreal.UObject implements UClass implements Bridge 
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 

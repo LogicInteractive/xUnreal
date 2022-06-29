@@ -1,0 +1,11 @@
+{
+    "name" : "hxcpp-debugger",
+    "license" : "MIT",
+    "version" : "1.0.6",
+    "description" : "Haxe classes implementing a debugger interface to the cpp.vm.Debugger class",
+    "contributors" : [ "gamehaxe" ],
+    "releasenote" : "See Changes.md",
+    "dependencies" : {
+        "hxcpp" : ""
+    }
+}

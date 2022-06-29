@@ -5,21 +5,28 @@ import cpp.ConstCharStar;
 import cpp.ConstCharStar;
 import cpp.Float32;
 import cpp.Float64;
+import cpp.Native;
 import cpp.NativeString;
 import cpp.Pointer;
 import cpp.Star;
 import unreal.GEngine;
+import unreal.UExposed.AClass;
+import unreal.UExposed.Bridge;
 import unreal.types.Transform;
 import unreal.types.Vector3;
 
 @:nogenerate 
-@:autoBuild(HxUnreal.buildTemplates("AActor"))
 @:cppFileCode('
-void _setActorLocation(void* p,double x,double y,double z);
-void _setActorRotation(void* p,double x,double y,double z);
-void _setActorScale3D(void* p,double x,double y,double z);
+void _setActorLocation(void* p, Vector3* vec);
+void _setActorRotation(void* p, Vector3* vec);
+void _setActorScale3D(void* p, Vector3* vec);
+void _getActorLocation(void* p, Vector3* vec);
+void _getActorRotation(void* p, Vector3* vec);
+void _getActorScale3D(void* p, Vector3* vec);
+void _getActorTransform(void* p, Transform* tr);
+void _setActorTransform(void* p, Transform* tr);
 ')
-class Actor extends UObject
+class Actor extends UObject implements AClass implements Bridge 
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +44,10 @@ class Actor extends UObject
 	@:isVar public var scaleY(get,set)				: Float;
 	@:isVar public var scaleZ(get,set)				: Float;
 	public var scale(default,set)					: Float;
+	@:noCompletion var actorTransform				: Transform;
 
+	public var primaryActorTick(get,null)			: ActorTickFunction;
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@:noCompletion
@@ -51,7 +61,6 @@ class Actor extends UObject
 		super();
 	}
 
-	@:uproperty(name="test",mode="test, not working yet")
 	public function BeginPlay()
 	{
 	
@@ -67,42 +76,63 @@ class Actor extends UObject
 
 	public function setActorLocation(x:Float,y:Float,z:Float)
 	{
-		_setActorLocation(this.owner.ptr,x,y,z);
 		actorTransform.Translation.x = x;
 		actorTransform.Translation.y = y;
 		actorTransform.Translation.z = z;
+		untyped __global__._setActorLocation(owner.ptr,actorTransform.Translation.ref());
 	}
 
 	public function setActorRotation(x:Float,y:Float,z:Float)
 	{
-		_setActorRotation(this.owner.ptr,x,y,z);
 		actorTransform.Rotation.x = x;
 		actorTransform.Rotation.y = y;
 		actorTransform.Rotation.z = z;
+		untyped __global__._setActorRotation(owner.ptr,actorTransform.Rotation.ref());
 	}
 
 	public function setActorScale3D(x:Float,y:Float,z:Float)
 	{
-		_setActorScale3D(this.owner.ptr,x,y,z);
 		actorTransform.Scale3D.x = x;
 		actorTransform.Scale3D.y = y;
 		actorTransform.Scale3D.z = z;
+		untyped __global__._setActorScale3D(owner.ptr,actorTransform.Scale3D.ref());
 		@:bypassAccessor scale=(x+y+z)/3;			
+	}
+
+	public function getActorTransform():Transform
+	{
+		untyped __global__._getActorTransform(owner.ptr,actorTransform.ref());
+		return actorTransform;
+	}
+
+	public function setActorTransform(t:Transform):Transform
+	{
+		@:bypassAccessor actorTransform = t;
+		untyped __global__._setActorTransform(owner.ptr,actorTransform.ref());
+		return actorTransform;
 	}
 
 	public function getActorLocation():Vector3
 	{
+		untyped __global__._getActorLocation(owner.ptr,actorTransform.Translation.ref());
 		return actorTransform.Translation;
 	}
 
 	public function getActorRotation():Vector3
 	{
+		untyped __global__._getActorRotation(owner.ptr,actorTransform.Rotation.ref());
 		return actorTransform.Rotation;
 	}
 
 	public function getActorScale3D():Vector3
 	{
+		untyped __global__._getActorScale3D(owner.ptr,actorTransform.Scale3D.ref());
 		return actorTransform.Scale3D;
+	}
+
+	public function setActorTickEnabled(bEnabled:Bool)
+	{
+		primaryActorTick.setTickFunctionEnable(bEnabled);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -175,28 +205,72 @@ class Actor extends UObject
 		setActorScale3D(value,value,value);
 		return scale=value;
 	}
-
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	@:noCompletion var actorTransform:Transform;
-	@:noCompletion
-	public function setActorTransform_inp(transform:Transform)
+	
+	function get_primaryActorTick():ActorTickFunction
 	{
-		actorTransform = transform;
+		if (primaryActorTick==null)
+			primaryActorTick = new ActorTickFunction(this);
+
+		return primaryActorTick;
 	}
-
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	@:native("_setActorLocation") @:noCompletion
-	extern public static function _setActorLocation(owner:Star<cpp.Void>,x:Float,y:Float,z:Float):Void;
-
-	@:native("_setActorRotation") @:noCompletion
-	extern public static function _setActorRotation(owner:Star<cpp.Void>,x:Float,y:Float,z:Float):Void;
-
-	@:native("_setActorScale3D") @:noCompletion
-	extern public static function _setActorScale3D(owner:Star<cpp.Void>,x:Float,y:Float,z:Float):Void;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 }
 
-// typedef Float3Callback = Callable<(p:cpp.Star<cpp.Void>,x:Float,y:Float,z:Float)->Void>;
+@:cppFileCode('
+void _setPrimaryActorTickCanEverTick(void* p, bool* b);
+void _getPrimaryActorTickCanEverTick(void* p, bool* b);
+void _getPrimaryActorTickStartWithTickEnabled(void* p, bool* b);
+void _setPrimaryActorTickStartWithTickEnabled(void* p, bool* b);
+void _setTickFunctionEnable(void* p, bool* b);
+')
+class ActorTickFunction
+{
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	var parent				: Actor;
+	
+	@:isVar public var bCanEverTick(get,set)						: Bool		= false;
+    @:isVar public var bStartWithTickEnabled(get,set)				: Bool		= false;
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	public function new(parent:Actor)
+	{
+		this.parent = parent;
+	}
+
+	function get_bCanEverTick():Bool
+	{
+		var b:Bool = @:bypassAccessor bCanEverTick;
+		untyped __global__._getPrimaryActorTickCanEverTick(cpp.Native.addressOf(parent.owner.ptr),cpp.Native.addressOf(b));
+		return b;
+	} 
+	function set_bCanEverTick(value:Bool):Bool
+	{
+		var b:Bool = value;
+		untyped __global__._setPrimaryActorTickCanEverTick(cpp.Native.addressOf(parent.owner.ptr),cpp.Native.addressOf(b));
+		return bCanEverTick = b;
+	} 
+
+	function get_bStartWithTickEnabled():Bool
+	{
+		var b:Bool = @:bypassAccessor bStartWithTickEnabled;
+		untyped __global__._getPrimaryActorTickStartWithTickEnabled(cpp.Native.addressOf(parent.owner.ptr),cpp.Native.addressOf(b));
+		return b;
+	} 
+	function set_bStartWithTickEnabled(value:Bool):Bool
+	{
+		var b:Bool = value;
+		untyped __global__._setPrimaryActorTickStartWithTickEnabled(cpp.Native.addressOf(parent.owner.ptr),cpp.Native.addressOf(b));
+		return bStartWithTickEnabled = b;
+	} 
+
+	public function setTickFunctionEnable(value:Bool)
+	{
+		var b:Bool = value;
+		untyped __global__._setTickFunctionEnable(cpp.Native.addressOf(parent.owner.ptr),cpp.Native.addressOf(b));
+	} 
+
+	/////////////////////////////////////////////////////////////////////////////////////
+} 

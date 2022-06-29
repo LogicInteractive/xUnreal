@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": "xUnreal",
+			"path": "."
+		},
+		{
+			"path": "c:\\dev\\fox\\"
+		},
+		{
+			"name": "UE5",
+			"path": "E:\\Unreal\\UE_5.0"
+		}
+	],
+	"extensions": {
+		"recommendations": [
+		]
+	}
+}

@@ -7,3 +7,57 @@ void SetValue(const int32 val) { Value = val;}
 private:
 UPROPERTY(BlueprintGetter=GetValue, BlueprintSetter=SetValue)
 int32 Value;
+
+
+
+
+
+
+	UFUNCTION(BlueprintPure, BlueprintInternalUseOnly)
+	int32 GetFishy() const { return Fishy; }
+	UFUNCTION(BlueprintCallable, BlueprintInternalUseOnly)
+	void SetFishy(const int32 val) { Fishy = val;}
+
+private:
+	UPROPERTY(BlueprintGetter=GetFishy, BlueprintSetter=SetFishy)
+	int32 Fishy;
+
+
+
+
+
+
+[Header]
+
+UFUNCTION(BlueprintNativeEvent)
+void MyNativeEvent();
+[CPP]
+
+void AMyEventActor::BeginPlay()
+{
+    Super::BeginPlay();
+    
+    MyNativeEvent();
+}
+void AMyEventActor::MyNativeEvent_Implementation()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Doing some work here"));
+}
+
+
+
+
+CallFunctionByNameWithArguments
+If the BP inherits from a C++ class like an actor or any UObject. Its possible to call functions or events from C++ to BP. As well as pass arguments as const TCHAR*, each argument is assessed as a space. Meaning the first string will be used to identify the function and any additional strings are considered parameters, with a space indicating that its a different parameter.
+
+FOutputDeviceNull OutputDeviceNull;
+
+const TCHAR* CmdAndParams = TEXT("Foo 1 2 3")
+this->CallFunctionByNameWithArguments(CmdAndParams, OutputDeviceNull, nullptr, true);
+To use the parameters inside a BP the function or custom event has to have the input pins of type string, from there you can cast them to any other type.
+
+Its possible to also call the function with no arguments, simply passing in the event/function name will work too:
+
+FOutputDeviceNull OutputDeviceNull;
+
+this->CallFunctionByNameWithArguments(TEXT("Foo"), OutputDeviceNull, nullptr, true);

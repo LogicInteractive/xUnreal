@@ -1,0 +1,8 @@
+<xml>
+
+<setup name="androidNdk" />
+
+<include name="toolchain/android-toolchain-clang.xml" if="NDKV20+" />
+<include name="toolchain/android-toolchain-gcc.xml" unless="NDKV20+" />
+
+</xml>

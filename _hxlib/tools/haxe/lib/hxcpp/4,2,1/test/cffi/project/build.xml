@@ -1,0 +1,15 @@
+<xml>
+   <include name="${HXCPP}/toolchain/haxe-target.xml"/>
+
+   <files id="prime">
+      <depend files="hxcpp-depends"/>
+      <file name="Project.cpp" />
+   </files>
+
+   <target id="default" output="${LIBPREFIX}prime${HX_TARGET_SUFFIX}" tool="linker" toolid="${STD_MODULE_LINK}">
+
+      <outdir name="${NDLLDIR}/${BINDIR}" />
+      <files id="prime"/>
+   </target>
+
+</xml>

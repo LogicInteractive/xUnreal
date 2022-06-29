@@ -1,5 +1,7 @@
 #include "{className}.h"
 
+{$disclaimer}
+
 {$prefix}{className}::{$prefix}{className}(const FObjectInitializer& ObjectInitializer)	: Super(ObjectInitializer) {}
 
 {$exposedMethods}

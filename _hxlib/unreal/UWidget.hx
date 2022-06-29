@@ -1,8 +1,10 @@
 package unreal;
 
+import unreal.UExposed.Bridge;
+import unreal.UExposed.UClass;
+
 @:nogenerate
-@:autoBuild(HxUnreal.buildTemplates("UWidget"))
-class UWidget extends unreal.UObject
+class UWidget extends unreal.UObject implements UClass implements Bridge 
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 

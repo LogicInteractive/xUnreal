@@ -1,0 +1,27 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Engine/GameInstance.h"
+#include <../_hxlib/xUnreal.h>
+#include "{className}.generated.h"
+
+{$disclaimer}
+
+static bool haxeRunning = false;
+static HaxeObject haxeMainInstance;
+
+UCLASS()
+class {$prefix}{className} : public {$prefix}{$superClass}
+{
+	GENERATED_BODY()
+	
+public:
+	{$prefix}{className}();
+    virtual void Init() override;
+    virtual void Shutdown() override;
+
+{$exposedMethods}
+
+private:
+	HaxeObject hxInst;
+};

@@ -1,5 +1,7 @@
 #include "{className}.h"
 
+{$disclaimer}
+
 void {$prefix}{className}::BeginPlay()
 {
     PrimaryActorTick.bCanEverTick = true;

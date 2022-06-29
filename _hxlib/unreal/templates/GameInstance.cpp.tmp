@@ -1,0 +1,62 @@
+#include "{className}.h"
+
+{$disclaimer}
+
+void onHaxeException(const char* info)
+{
+    {$hxMainClass}_stopHaxeThreadIfRunning(false);	// stop the haxe thread immediately
+
+    if (GEngine != NULL)
+        GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, info);
+}
+
+{$prefix}{className}::{$prefix}{className}()
+{
+}
+
+void {$prefix}{className}::Init()
+{
+	Super::Init();
+
+    if (!haxeRunning)
+    {
+        {$hxMainClass}_initializeHaxeThread(onHaxeException); // start the haxe thread
+        haxeRunning = true;
+    }
+
+    if (!haxeMainInstance)
+    {
+        {$hxMainClass}_unreal_GEngine_init(TCHAR_TO_UTF8(*FPaths::LaunchDir()));
+        haxeMainInstance = {$hxMainClass}_new();
+    }
+
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+    if (!hxInst)
+    {
+        hxInst = {$hxMainClass}_{className}_new();
+        {$hxMainClass}_unreal_GameInstance_setOwner(hxInst, this);
+    }
+
+    if (hxInst)
+        {$hxMainClass}_{className}_Init(hxInst);
+}
+
+void {$prefix}{className}::Shutdown()
+{
+    if (hxInst)
+    {
+        {$hxMainClass}_{className}_Shutdown(hxInst);
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+        hxInst = NULL;
+    }
+
+    if (haxeMainInstance)
+        {$hxMainClass}_releaseHaxeObject(haxeMainInstance); // when we're done with our object we can tell the haxe-gc we're finished
+
+    //Main_stopHaxeThreadIfRunning(true); // stop the haxe thread but wait for any scheduled events to complete
+    Super::Shutdown();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,11 @@
+{
+	"name": "hxcpp-debug-server",
+	"url": "https://github.com/vshaxe/hxcpp-debugger",
+	"license": "MIT",
+	"tags": ["cpp", "hxcpp", "vscode", "debug", "debugger"],
+	"description": "Support library for the hxcpp-debugger VSCode extension.",
+	"version": "1.2.4",
+	"releasenote": "See hxcpp-debugger changelog",
+	"contributors": ["vshaxe"],
+	"dependencies": {}
+}

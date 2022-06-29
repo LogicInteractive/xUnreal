@@ -5,7 +5,7 @@ import cpp.ConstCharStar;
 import cpp.NativeString;
 import unreal.GEngine;
 
-@:nogenerate
+@:nogenerate 
 class LevelScriptActor extends Actor
 {
 	/////////////////////////////////////////////////////////////////////////////////////
