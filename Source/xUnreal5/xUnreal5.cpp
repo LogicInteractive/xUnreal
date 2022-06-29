@@ -1,9 +1,44 @@
 #include "xUnreal5.h"
-#include <../_hxlib/xUnreal.h>
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, xUnreal5, "xUnreal5" );
+IMPLEMENT_PRIMARY_GAME_MODULE( FxUnreal5, xUnreal5, "xUnreal5" );
 DEFINE_LOG_CATEGORY(Haxe);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void onHaxeException(const char* info)
+{
+    XUnrealMain_stopHaxeThreadIfRunning(false);	// stop the haxe thread immediately
+
+    if (GEngine != NULL)
+        GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, info);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void FxUnreal5::StartupModule()
+{
+    if (!haxeRunning)
+    {
+        XUnrealMain_initializeHaxeThread(onHaxeException); // start the haxe thread
+        haxeRunning = true;
+    }
+
+    if (!haxeMainInstance)
+    {
+        XUnrealMain_unreal_GEngine_init(TCHAR_TO_UTF8(*FPaths::LaunchDir()));
+        haxeMainInstance = XUnrealMain_new();
+    }
+}
+
+void FxUnreal5::ShutdownModule()
+{
+    if (haxeMainInstance)
+        XUnrealMain_releaseHaxeObject(haxeMainInstance); // when we're done with our object we can tell the haxe-gc we're finished
+    XUnrealMain_stopHaxeThreadIfRunning(true); // stop the haxe thread but wait for any scheduled events to complete
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void printToScreen(HaxeString str)
 {

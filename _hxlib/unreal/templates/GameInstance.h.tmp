@@ -7,9 +7,6 @@
 
 {$disclaimer}
 
-static bool haxeRunning = false;
-static HaxeObject haxeMainInstance;
-
 UCLASS()
 class {$prefix}{className} : public {$prefix}{$superClass}
 {

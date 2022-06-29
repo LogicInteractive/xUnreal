@@ -13,13 +13,13 @@ class XUnrealMain extends unreal.UExposed implements Bridge
 
 	static function main()
 	{
-		// CompileTime.importPackage("app");
+		CompileTime.importPackage("app");
 	}
 
 	public function new()
 	{
 		super();
-		trace("Hello");
+		trace("xUnreal started.");
 	}	
 
 	/////////////////////////////////////////////////////////////////////////////////////
