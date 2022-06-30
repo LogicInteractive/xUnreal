@@ -47,10 +47,13 @@
 		{
 			"label": "Build Haxe",
 			"type": "shell",
-			"command": "${workspaceFolder}/_hxlib/tools/haxe/haxe.exe",
+			"command": "_hxlib/tools/haxe/haxe.exe",
 			"args": [
 				"build.hxml"
 			],
+			// "options": {
+			// 		"cwd": "${workspaceFolder}/Plugins/xUnrealPlugin"
+			// },			
 			"problemMatcher": [
 				"$haxe-absolute",
 				"$haxe",

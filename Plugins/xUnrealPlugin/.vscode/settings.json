@@ -13,6 +13,7 @@
     "Intermediate": true,
     "Content": true,
     "Config": true,
-    "Saved": true
+    "Saved": true,
+    "..\\..\\Haxe": true
   }
 }

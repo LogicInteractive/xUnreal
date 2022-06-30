@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "xUnrealPlugin",
+			"path": "."
+		},		
+		{
+			"name": "Haxe",
+			"path": "..\\..\\Haxe"
+		},
+		{
+			"name": "Unreal",
+			"path": "..\\..\\"
+		},
+		{
+			"path": "c:\\dev\\fox\\"
+		}
+	],
+	"extensions": {
+		"recommendations": [
+		]
+	}
+}

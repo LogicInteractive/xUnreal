@@ -15,6 +15,8 @@ class UnrealBuild
 		var projectName="xUnreal5";
 		var projectFile = "";
 		var localFolder = Sys.getCwd();
+		localFolder = localFolder.split("Plugins\\xUnrealPlugin/").join("");
+		trace(localFolder);
 		for (f in FileSystem.readDirectory(localFolder))
 			if (f.indexOf(".uproject")!=-1)
 			{
@@ -34,7 +36,7 @@ class UnrealBuild
 		var editorBuildConfig = "Editor";
 		var editorBuildTarget = "Development";
 		var editorBuildPlatform = "Win64";
-		var projectFile = Sys.getCwd()+'\\$projectName.uproject';
+		var projectFile = localFolder+'\\$projectName.uproject';
 		var script = '"$enginePath\\Engine\\Build\\BatchFiles\\Build.bat"';
 
 		var cmd:String = '$script $projectName$editorBuildConfig $editorBuildPlatform $editorBuildTarget $projectFile -waitmutex';

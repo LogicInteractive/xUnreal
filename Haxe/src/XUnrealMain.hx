@@ -19,7 +19,7 @@ class XUnrealMain extends unreal.UExposed implements Bridge
 	public function new()
 	{
 		super();
-		trace("xUnreal started.");
+		trace("xUnreal process started.");
 	}	
 
 	/////////////////////////////////////////////////////////////////////////////////////

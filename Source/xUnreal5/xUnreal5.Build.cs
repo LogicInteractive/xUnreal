@@ -7,10 +7,6 @@ public class xUnreal5 : ModuleRules
 	public xUnreal5(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HTTP", "OpenSSL", "UMG", "Slate", "SlateCore" });
-		PrivateDependencyModuleNames.AddRange(new string[] { });
-
-		PublicAdditionalLibraries.Add(@"$(ProjectDir)/Binaries/haxe_build/libXUnrealMain.lib");
 	}
 }

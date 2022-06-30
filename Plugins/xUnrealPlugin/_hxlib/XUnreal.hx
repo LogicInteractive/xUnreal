@@ -9,7 +9,7 @@ class XUnreal
 {
 	static public function buildTemplates(?baseClass:String)
 	{
-		var sourceFolder = "xUnreal5";
+		var sourceFolder = "xUnrealPlugin";
 
 		var mainClass="XUnrealMain";
 
