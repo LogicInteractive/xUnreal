@@ -169,7 +169,7 @@ class TestUserWidget extends unreal.UserWidget
 	{
 		drawCircle(100,100,50,0xffffff,true,1);
 		drawRect(0,0,200,100,0xffffff,true,3);
-		drawText('Hello Slate drawing, 120,180);
+		drawText('Hello Slate drawing', 120,180);
 		drawLine(50,200,400,250,0x55ffffff);
 	}
 }
