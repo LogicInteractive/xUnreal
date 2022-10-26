@@ -5,9 +5,9 @@
 #include <../_hxlib/xUnreal.h>
 #include "{className}.generated.h"
 
-{$disclaimer}
+{$head}
 
-UCLASS()
+{$classDef}
 class {$prefix}{className} : public {$prefix}{$superClass}
 {
 	GENERATED_BODY()

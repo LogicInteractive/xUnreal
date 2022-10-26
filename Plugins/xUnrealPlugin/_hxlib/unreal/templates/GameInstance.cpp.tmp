@@ -1,6 +1,6 @@
 #include "{className}.h"
 
-{$disclaimer}
+{$head}
 
 {$prefix}{className}::{$prefix}{className}()
 {
@@ -9,13 +9,13 @@
 void {$prefix}{className}::Init()
 {
 	Super::Init();
-
+{$construct} 
     if (hxInst)
         {$hxMainClass}_releaseHaxeObject(hxInst); 
 
     if (!hxInst)
     {
-        hxInst = {$hxMainClass}_{className}_new();
+        hxInst = {$hxMainClass}{$packagePath}_{className}_new();
         {$hxMainClass}_unreal_GameInstance_setOwner(hxInst, this);
     }
 
@@ -25,6 +25,7 @@ void {$prefix}{className}::Init()
 
 void {$prefix}{className}::Shutdown()
 {
+{$destruct}   
     if (hxInst)
     {
         {$hxMainClass}_{className}_Shutdown(hxInst);
@@ -34,4 +35,4 @@ void {$prefix}{className}::Shutdown()
     Super::Shutdown();
 }
 
-/////////////////////////////////////////////////////////////////////////////////////
+{$exposedMethods}

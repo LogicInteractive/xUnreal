@@ -1,0 +1,32 @@
+#include "{className}.h"
+
+{$head}
+
+{$prefix}{className}::{$prefix}{className}() {}
+{$prefix}{className}::~{$prefix}{className}() {}
+
+void {$prefix}{className}::PostInitProperties()
+{
+    Super::PostInitProperties();
+{$construct}    
+	if (GEngine!=NULL && haxeRunning && !hxInst)
+	{
+		hxInst = {$hxMainClass}{$packagePath}_{className}_new();
+    	{$hxMainClass}_unreal_Object_setOwner(hxInst, this);
+	}
+}
+
+void {$prefix}{className}::BeginDestroy()
+{
+{$destruct}    
+    if (GEngine!=NULL && haxeRunning && hxInst)
+    {
+        {$hxMainClass}_unreal_Object_destructor(hxInst);
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+        hxInst = NULL;
+    }	
+
+    Super::BeginDestroy();
+}
+
+{$exposedMethods}

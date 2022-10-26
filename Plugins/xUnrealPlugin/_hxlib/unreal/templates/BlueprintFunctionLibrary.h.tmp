@@ -3,11 +3,12 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include <../_hxlib/xUnreal.h>
+#include "../HaxeObject.h"
 #include "{className}.generated.h"
 
-{$disclaimer}
+{$head}
 
-UCLASS()
+{$classDef}
 class {$prefix}{className} : public {$prefix}{$superClass}
 {
 	GENERATED_UCLASS_BODY()

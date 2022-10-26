@@ -1,0 +1,119 @@
+#include "{className}.h"
+
+{$head}
+
+{$prefix}{className}::{$prefix}{className}(const class FObjectInitializer& ObjectInitializer)
+{
+    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bStartWithTickEnabled = true;
+
+    OnActorBeginOverlap.AddDynamic(this,&{$prefix}{className}::OnOverlapBeginEvent);
+    OnActorEndOverlap.AddDynamic(this,&{$prefix}{className}::OnOverlapEndEvent);
+}
+
+{$prefix}{className}::~{$prefix}{className}()
+{
+    // OnActorBeginOverlap.RemoveDynamic(this,&{$prefix}{className}::OnOverlapBeginEvent);
+    // OnActorEndOverlap.RemoveDynamic(this,&{$prefix}{className}::OnOverlapEndEvent);
+}
+
+void {$prefix}{className}::BeginPlay()
+{
+{$construct}  
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+	if (!hxInst)
+    {
+        hxInst = {$hxMainClass}{$packagePath}_{className}_new();
+        {$hxMainClass}_unreal_TriggerBox_setOwner(hxInst, this);
+    }
+
+    if (hxInst)
+        {$hxMainClass}_unreal_TriggerBox_BeginPlay(hxInst);
+
+    Super::BeginPlay();
+
+    FTimerHandle timerhandler;
+	GetWorld()->GetTimerManager().SetTimer(timerhandler, [this]() {TriggerCurrentOverlaps();}, 0.001f, false);
+}
+
+void {$prefix}{className}::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+{$destruct} 
+    if (hxInst)
+        {$hxMainClass}_unreal_TriggerBox_EndPlay(hxInst);
+
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+    Super::EndPlay(EndPlayReason);
+}
+
+void {$prefix}{className}::Tick(float DeltaSeconds)
+{
+    if (hxInst)
+        {$hxMainClass}_unreal_TriggerBox_Tick(hxInst,DeltaSeconds);
+
+    Super::Tick(DeltaSeconds);
+}
+
+void {$prefix}{className}::OnOverlapBeginEvent(class AActor* OverlappedActor, class AActor* OtherActor)
+{
+    if (OtherActor && (OtherActor != this))
+    {
+        if (hxInst)
+            {$hxMainClass}_unreal_TriggerBox_OnOverlapBeginInternal(hxInst,OtherActor,TCHAR_TO_UTF8(*OtherActor->GetName()));
+    }    
+}
+
+void {$prefix}{className}::OnOverlapEndEvent(class AActor* overlappedActor, class AActor* OtherActor)
+{
+    if (OtherActor && (OtherActor != this))
+    {
+        if (hxInst)
+            {$hxMainClass}_unreal_TriggerBox_OnOverlapEndInternal(hxInst,OtherActor,TCHAR_TO_UTF8(*OtherActor->GetName()));
+    }    
+}
+
+void {$prefix}{className}::TriggerCurrentOverlaps()
+{
+    TArray<AActor*> Result;
+    GetOverlappingActors(Result,AActor::StaticClass());
+    if (!hxInst)
+        return;
+
+  	for(int i = 0; i < Result.Num(); i++)
+    {
+        if (Result[i] && (Result[i] != this))
+            {$hxMainClass}_unreal_TriggerBox_OnOverlapBeginInternal(hxInst,Result[i],TCHAR_TO_UTF8(*Result[i]->GetName()));
+    }
+}
+
+// void AActor::UpdateOverlaps(bool bDoNotifies)
+// {
+// 	// just update the root component, which will cascade down to the children
+// 	USceneComponent* const RootComp = GetRootComponent();
+// 	if (RootComp)
+// 	{
+// 		RootComp->UpdateOverlaps(nullptr, bDoNotifies);
+// 	}
+// }
+
+// bool AActor::IsOverlappingActor(const AActor* Other) const
+// {
+// 	for (UActorComponent* OwnedComp : OwnedComponents)
+// 	{
+// 		if (UPrimitiveComponent* PrimComp = Cast<UPrimitiveComponent>(OwnedComp))
+// 		{
+// 			if ((PrimComp->GetOverlapInfos().Num() > 0) && PrimComp->IsOverlappingActor(Other))
+// 			{
+// 				// found one, finished
+// 				return true;
+// 			}
+// 		}
+// 	}
+// 	return false;
+// }
+
+{$exposedMethods}

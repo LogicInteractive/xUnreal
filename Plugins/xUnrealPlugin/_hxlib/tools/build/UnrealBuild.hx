@@ -16,7 +16,7 @@ class UnrealBuild
 		var projectFile = "";
 		var localFolder = Sys.getCwd();
 		localFolder = localFolder.split("Plugins\\xUnrealPlugin/").join("");
-		trace(localFolder);
+		// trace(localFolder);
 		for (f in FileSystem.readDirectory(localFolder))
 			if (f.indexOf(".uproject")!=-1)
 			{

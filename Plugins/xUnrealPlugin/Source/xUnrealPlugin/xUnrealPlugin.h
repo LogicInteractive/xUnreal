@@ -5,16 +5,11 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 #include <../_hxlib/xUnreal.h>
-
-bool haxeRunning = false;
-HaxeObject haxeMainInstance;
-HaxeObject hxInst;
+#include "BPLatentTaskNode.h"
 
 class FxUnrealPluginModule : public IModuleInterface
 {
 public:
-
-	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 };

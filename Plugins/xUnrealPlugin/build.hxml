@@ -1,8 +1,5 @@
 -cp ../../Haxe/src
 -cp _hxlib
--cp c:/dev/fox/fox/hx
--cp c:/dev/fox/thirdparty/common
-
 -main XUnrealMain
 --cpp Binaries/haxe_build
 --dce full
@@ -16,6 +13,8 @@
 -D static_link
 # -D HXCPP_VERBOSE
 --macro include("unreal",true)
+--macro include("xunreal",true)
+--macro include("app",true)
 # --cmd build.bat
 
 # -D scriptable

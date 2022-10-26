@@ -1,6 +1,6 @@
 #include "{className}.h"
 
-{$disclaimer}
+{$head}
 
 void {$prefix}{className}::BeginPlay()
 {
@@ -12,7 +12,7 @@ void {$prefix}{className}::BeginPlay()
 
 	if (!hxInst)
     {
-        hxInst = {$hxMainClass}_{className}_new();
+        hxInst = {$hxMainClass}{$packagePath}_{className}_new();
         {$hxMainClass}_unreal_Actor_setOwner(hxInst, this);
     }
 

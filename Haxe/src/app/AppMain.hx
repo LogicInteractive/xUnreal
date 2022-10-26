@@ -1,10 +1,9 @@
 package app;
 
-import AppGInst;
-import fox.kontentum.Kontentum;
-import fox.loader.Loader;
-import fox.types.Object;
-import fox.utils.ObjUtils;
+import lib.kontentum.Kontentum;
+import lib.loader.Loader;
+import lib.types.Object;
+import lib.utils.ObjUtils;
 
 class AppMain
 {

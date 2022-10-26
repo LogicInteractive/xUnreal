@@ -1,0 +1,17 @@
+package lib.types;
+
+enum Align
+{
+	NONE;
+	LEFT;
+	CENTER;
+	RIGHT;
+	JUSTIFY;
+	TOP;
+	MIDDLE;
+	BOTTOM;
+	TOPLEFT;
+	TOPRIGHT;
+	BOTTOMLEFT;
+	BOTTOMRIGHT;
+}

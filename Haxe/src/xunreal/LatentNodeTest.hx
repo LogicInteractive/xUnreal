@@ -1,0 +1,32 @@
+package xunreal;
+
+import haxe.Timer;
+import cpp.abi.Abi;
+import unreal.*;
+
+@:keep
+// @:cppFileCode('
+// void complete();
+// ')
+class LatentNodeTest extends unreal.BPLatentTaskNode
+{
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	public function new(ip:String)
+	{
+		super();
+		trace("delgate???");
+		trace(ip);
+
+		Timer.delay(()->{
+
+			trace("go!");
+			taskComplete();
+
+		},2000);
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+}

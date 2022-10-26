@@ -1,0 +1,31 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Kismet/BlueprintAsyncActionBase.h"
+#include <../_hxlib/xUnreal.h>
+#include "{className}.generated.h"
+
+{$head}
+
+// DECLARE_DYNAMIC_MULTICAST_DELEGATE(FBPNodeOutputPin);
+
+{$classDef}
+class {$prefix}{className} : public {$prefix}{$superClass}
+{
+	GENERATED_UCLASS_BODY()
+	
+public:
+	// UPROPERTY(BlueprintAssignable)
+	// FBPNodeOutputPin Completed;
+
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", Category = "AsyncNode"))
+	static {$prefix}{className}* {className}();
+
+	virtual void Activate() override;
+	virtual void SetReadyToDestroy() override;
+	
+{$exposedMethods}
+
+private:
+	HaxeObject hxInst;
+};

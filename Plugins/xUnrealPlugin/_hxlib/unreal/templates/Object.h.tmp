@@ -1,0 +1,26 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include <../_hxlib/xUnreal.h>
+#include "../_hxlib/unreal/types/HaxeArray.h"
+#include "{className}.generated.h"
+
+{$head}
+
+{$classDef}
+class {$prefix}{className} : public {$prefix}{$superClass}
+{
+	GENERATED_BODY()
+	
+public:
+	{$prefix}{className}();
+	~{$prefix}{className}();
+
+	virtual void PostInitProperties() override;
+	virtual void BeginDestroy() override;
+
+{$exposedMethods}
+
+private:
+	HaxeObject hxInst;
+};

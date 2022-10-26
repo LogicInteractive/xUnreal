@@ -8,7 +8,7 @@ import cpp.NativeString;
 @:cppFileCode('
 double _getTimeSeconds();
 ')
-class World extends unreal.UExposed
+class World extends UObjectBase
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 

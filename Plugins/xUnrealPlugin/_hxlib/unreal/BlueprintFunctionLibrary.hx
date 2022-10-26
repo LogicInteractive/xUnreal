@@ -4,7 +4,7 @@ import unreal.UExposed.Bridge;
 import unreal.UExposed.UClass;
 
 @:nogenerate
-class BlueprintFunctionLibrary extends unreal.UObject implements UClass implements Bridge 
+class BlueprintFunctionLibrary extends UObjectBase implements UClass implements Bridge 
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 

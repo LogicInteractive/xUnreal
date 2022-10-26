@@ -12,6 +12,8 @@ import cpp.Star;
 import unreal.GEngine;
 import unreal.UExposed.AClass;
 import unreal.UExposed.Bridge;
+import unreal.UExposed;
+import unreal.types.DynamicWrapper;
 import unreal.types.Transform;
 import unreal.types.Vector3;
 
@@ -25,8 +27,9 @@ void _getActorRotation(void* p, Vector3* vec);
 void _getActorScale3D(void* p, Vector3* vec);
 void _getActorTransform(void* p, Transform* tr);
 void _setActorTransform(void* p, Transform* tr);
+bool _actorHasTag(void* actor, const char* tag);
 ')
-class Actor extends UObject implements AClass implements Bridge 
+class Actor extends UObjectBase implements AClass implements Bridge 
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +57,7 @@ class Actor extends UObject implements AClass implements Bridge
 	public function setOwner(owner:Star<cpp.Void>)
 	{
 		this.owner = Pointer.fromStar(owner);
+		UObjectBase.setDelegateOwners(this);
 	}
 
 	public function new()
@@ -74,15 +78,19 @@ class Actor extends UObject implements AClass implements Bridge
 	{
 	}
 
-	public function setActorLocation(x:Float,y:Float,z:Float)
+	// @:native("_setActorLocation") @:noCompletion
+	// extern static function __setActorLocation(owner:cpp.Star<cpp.Void>,vec:cpp.Star<Vector3>):Void;
+
+	public function setActorLocation(x:Float=0,y:Float=0,z:Float=0)
 	{
 		actorTransform.Translation.x = x;
 		actorTransform.Translation.y = y;
 		actorTransform.Translation.z = z;
 		untyped __global__._setActorLocation(owner.ptr,actorTransform.Translation.ref());
+		// __setActorLocation(owner.ptr,actorTransform.Translation.ref());
 	}
 
-	public function setActorRotation(x:Float,y:Float,z:Float)
+	public function setActorRotation(x:Float=0,y:Float=0,z:Float=0)
 	{
 		actorTransform.Rotation.x = x;
 		actorTransform.Rotation.y = y;
@@ -90,14 +98,14 @@ class Actor extends UObject implements AClass implements Bridge
 		untyped __global__._setActorRotation(owner.ptr,actorTransform.Rotation.ref());
 	}
 
-	public function setActorScale3D(x:Float,y:Float,z:Float)
-	{
-		actorTransform.Scale3D.x = x;
-		actorTransform.Scale3D.y = y;
-		actorTransform.Scale3D.z = z;
-		untyped __global__._setActorScale3D(owner.ptr,actorTransform.Scale3D.ref());
-		@:bypassAccessor scale=(x+y+z)/3;			
-	}
+	// public function setActorScale3D(x:Float=1,y:Float=1,z:Float=1)
+	// {
+	// 	actorTransform.Scale3D.x = x;
+	// 	actorTransform.Scale3D.y = y;
+	// 	actorTransform.Scale3D.z = z;
+	// 	untyped __global__._setActorScale3D(owner.ptr,actorTransform.Scale3D.ref());
+	// 	@:bypassAccessor scale=(x+y+z)/3;			
+	// }
 
 	public function getActorTransform():Transform
 	{
@@ -161,48 +169,48 @@ class Actor extends UObject implements AClass implements Bridge
 	function get_rotationX():Float { return actorTransform.Rotation.x; }
 	function set_rotationX(value:Float):Float
 	{
-		setActorRotation(value,actorTransform.Translation.y,actorTransform.Rotation.z);
+		// setActorRotation(value,actorTransform.Translation.y,actorTransform.Rotation.z);
 		return rotationX=value;
 	}
 
 	function get_rotationY():Float { return actorTransform.Rotation.y; }
 	function set_rotationY(value:Float):Float
 	{
-		setActorRotation(actorTransform.Translation.x,value,actorTransform.Rotation.z);
+		// setActorRotation(actorTransform.Translation.x,value,actorTransform.Rotation.z);
 		return rotationY=value;
 	}
 
 	function get_rotationZ():Float { return actorTransform.Rotation.z; }
 	function set_rotationZ(value:Float):Float
 	{
-		setActorRotation(actorTransform.Rotation.x,actorTransform.Rotation.y,value);
+		// setActorRotation(actorTransform.Rotation.x,actorTransform.Rotation.y,value);
 		return rotationZ=value;
 	}
 
 	function get_scaleX():Float { return actorTransform.Scale3D.x; }
 	function set_scaleX(value:Float):Float
 	{
-		setActorScale3D(value,actorTransform.Scale3D.y,actorTransform.Scale3D.z);
+		// setActorScale3D(value,actorTransform.Scale3D.y,actorTransform.Scale3D.z);
 		return scaleX=value;
 	}
 
 	function get_scaleY():Float { return actorTransform.Scale3D.y; }
 	function set_scaleY(value:Float):Float
 	{
-		setActorScale3D(actorTransform.Scale3D.x,value,actorTransform.Scale3D.z);
+		// setActorScale3D(actorTransform.Scale3D.x,value,actorTransform.Scale3D.z);
 		return scaleY=value;
 	}
 
 	function get_scaleZ():Float { return actorTransform.Scale3D.x; }
 	function set_scaleZ(value:Float):Float
 	{
-		setActorScale3D(actorTransform.Scale3D.x,actorTransform.Scale3D.y,value);
+		// setActorScale3D(actorTransform.Scale3D.x,actorTransform.Scale3D.y,value);
 		return scaleZ=value;
 	}
 	
 	function set_scale(value:Float):Float
 	{
-		setActorScale3D(value,value,value);
+		// setActorScale3D(value,value,value);
 		return scale=value;
 	}
 	
@@ -213,6 +221,30 @@ class Actor extends UObject implements AClass implements Bridge
 
 		return primaryActorTick;
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	static public function hasTag(actorPtr:ActorPtr, tag:String):Bool
+	{
+		var r = false;
+		r = untyped __global__._actorHasTag(actorPtr,tag);
+		return r;
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@:noCompletion
+	public function incomingDelegate(delegateName:String,numParams:Int=0,param1:cpp.Star<DynamicWrapper>,param2:cpp.Star<DynamicWrapper>,param3:cpp.Star<DynamicWrapper>)
+	{
+		UObjectBase.processIncomingDelegate(this, 
+		{
+			delegateName:delegateName,
+			numParams:numParams,
+			param1:param1,
+			param2:param2,
+			param3:param3
+		});
+	}	
 
 	/////////////////////////////////////////////////////////////////////////////////////
 }
@@ -274,3 +306,5 @@ class ActorTickFunction
 
 	/////////////////////////////////////////////////////////////////////////////////////
 } 
+
+typedef ActorPtr = cpp.Star<cpp.Void>;

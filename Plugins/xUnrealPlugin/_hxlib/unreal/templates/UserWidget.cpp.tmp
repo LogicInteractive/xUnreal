@@ -1,6 +1,6 @@
 #include "{className}.h"
 
-{$disclaimer}
+{$head}
 
 void {$prefix}{className}::NativeConstruct()
 {
@@ -11,7 +11,7 @@ void {$prefix}{className}::NativeConstruct()
 
 	if (!hxInst)
     {
-        hxInst = {$hxMainClass}_{className}_new();
+        hxInst = {$hxMainClass}{$packagePath}_{className}_new();
         {$hxMainClass}_unreal_UWidget_setOwner(hxInst, this);
     }
 
@@ -57,6 +57,20 @@ void {$prefix}{className}::NativeTick(const FGeometry& MyGeometry, float InDelta
     {
         {$hxMainClass}_unreal_UserWidget_NativeTick(hxInst,InDeltaTime);
     }
+}
+
+int32 {$prefix}{className}::NativePaint(const FPaintArgs &Args, const FGeometry &AllottedGeometry, const FSlateRect &MyCullingRect, FSlateWindowElementList &OutDrawElements, int32 LayerId, const FWidgetStyle &InWidgetStyle, bool bParentEnabled) const
+{
+    Super::NativePaint(Args, AllottedGeometry, MyCullingRect,  OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
+    FPaintContext* Context = new FPaintContext(AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
+    // UWidgetBlueprintLibrary::DrawLines(Context, Points, FLinearColor::Blue, true, 10.0f);   
+    // return LayerId + 1;
+    if (hxInst)
+    {
+        {$hxMainClass}_unreal_UserWidget_NativePaint(hxInst,Context);
+    }
+    delete Context;
+    return LayerId + 1;
 }
 
 {$exposedMethods}

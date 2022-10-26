@@ -1,6 +1,6 @@
 #include "{className}.h"
 
-{$disclaimer}
+{$head}
 
 {$prefix}{className}::{$prefix}{className}(const class FObjectInitializer& ObjectInitializer)
 {
@@ -13,12 +13,13 @@
 
 void {$prefix}{className}::BeginPlay()
 {
+{$construct}  
     if (hxInst)
         {$hxMainClass}_releaseHaxeObject(hxInst); 
 
 	if (!hxInst)
     {
-        hxInst = {$hxMainClass}_{className}_new();
+        hxInst = {$hxMainClass}{$packagePath}_{className}_new();
         {$hxMainClass}_unreal_Actor_setOwner(hxInst, this);
     }
 
@@ -30,6 +31,7 @@ void {$prefix}{className}::BeginPlay()
 
 void {$prefix}{className}::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+{$destruct} 
     if (hxInst)
         {$hxMainClass}_unreal_Actor_EndPlay(hxInst);
 
@@ -46,3 +48,5 @@ void {$prefix}{className}::Tick(float DeltaSeconds)
 
     Super::Tick(DeltaSeconds);
 }
+
+{$exposedMethods}

@@ -1,0 +1,49 @@
+#include "{className}.h"
+
+{$head}
+
+{$prefix}{className}::{$prefix}{className}(const class FObjectInitializer& ObjectInitializer)
+{
+    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bStartWithTickEnabled = true;
+}
+
+void {$prefix}{className}::BeginPlay()
+{
+{$construct}  
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+	if (!hxInst)
+    {
+        hxInst = {$hxMainClass}{$packagePath}_{className}_new();
+        {$hxMainClass}_unreal_GameModeBase_setOwner(hxInst, this);
+    }
+
+    if (hxInst)
+        {$hxMainClass}_unreal_GameModeBase_BeginPlay(hxInst);
+
+    Super::BeginPlay();
+}
+
+void {$prefix}{className}::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+{$destruct} 
+    if (hxInst)
+        {$hxMainClass}_unreal_GameModeBase_EndPlay(hxInst);
+
+    if (hxInst)
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+
+    Super::EndPlay(EndPlayReason);
+}
+
+void {$prefix}{className}::Tick(float DeltaSeconds)
+{
+    if (hxInst)
+        {$hxMainClass}_unreal_GameModeBase_Tick(hxInst,DeltaSeconds);
+
+    Super::Tick(DeltaSeconds);
+}
+
+{$exposedMethods}

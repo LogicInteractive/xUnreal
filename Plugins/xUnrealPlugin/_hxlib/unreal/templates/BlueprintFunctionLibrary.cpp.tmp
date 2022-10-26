@@ -1,6 +1,6 @@
 #include "{className}.h"
 
-{$disclaimer}
+{$head}
 
 {$prefix}{className}::{$prefix}{className}(const FObjectInitializer& ObjectInitializer)	: Super(ObjectInitializer) {}
 

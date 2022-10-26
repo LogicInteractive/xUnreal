@@ -1,0 +1,79 @@
+#include "{className}.h"
+
+{$head}
+
+{$prefix}{className}::{$prefix}{className}(const FObjectInitializer& ObjectInitializer)	: Super(ObjectInitializer) {}
+
+{$exposedMethods}
+
+{$prefix}{className}* {$prefix}{className}::{className}({$constructorArgs})
+{
+	{$prefix}{className}* Node = NewObject<{$prefix}{className}>();
+	if (Node)
+	{
+		// Node->WorldContext = WorldContextObj;
+		// Node->NumsToCalculate=Num;
+
+		// if (!Node->hxInst)
+		// {
+			// Node->hxInst = {$hxMainClass}{$packagePath}_{className}_new();
+			// {$hxMainClass}_unreal_Actor_setOwner(hxInst, this);
+		// }
+
+		if (!Node->hxInst)
+		{
+			Node->hxInst = {$hxMainClass}{$packagePath}_{className}_new({$constructorInputParams});
+			{$hxMainClass}_unreal_BPLatentTaskNode_setOwner(Node->hxInst, Node);
+		}
+
+	}
+	return Node;
+}
+
+void {$prefix}{className}::Activate()
+{
+	// if (!hxInst)
+	// {
+	// 	hxInst = {$hxMainClass}{$packagePath}_{className}_new();
+    //     {$hxMainClass}_unreal_BPLatentNode_setOwner(hxInst, this);
+	// }
+
+	// if ({$prefix}{className}::bActive)
+	// {
+	// 	FFrame::KismetExecutionMessage(TEXT("Async action is already running"), ELogVerbosity::Warning);
+	// 	return;
+	// }
+
+	// FFrame::KismetExecutionMessage(TEXT("Started Activate!"), ELogVerbosity::Log);
+
+	// if (WorldContext)
+	// {
+	// 	{$prefix}{className}::bActive=true;
+	// 	FTimerDelegate TimerDelegate;
+	// 	TimerDelegate.BindUObject(this,&amp;UBPAsyncActionBase::InternalTick);
+	// 	WorldContext->GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, 0.1f, true);
+	// }
+	// else
+	// {
+	// 	FFrame::KismetExecutionMessage(TEXT("Invalid world context obj"), ELogVerbosity::Error);
+	// }
+
+	// Completed.Broadcast(999);
+}
+
+// void {$prefix}{className}::Complete()
+// {
+// 	Completed.Broadcast();
+// 	Deactivate();
+// }
+void {$prefix}{className}::SetReadyToDestroy()
+{
+    if (hxInst)
+    {
+        {$hxMainClass}_unreal_BlueprintAsyncActionBase_dispose(hxInst);
+        {$hxMainClass}_releaseHaxeObject(hxInst); 
+        hxInst = NULL;
+    }
+
+	Super::SetReadyToDestroy();
+}

@@ -3,12 +3,13 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include <../_hxlib/xUnreal.h>
+#include <../Source/xUnrealPlugin/XUnrealGameInstance.h>
 #include "{className}.generated.h"
 
-{$disclaimer}
+{$head}
 
-UCLASS()
-class {$prefix}{className} : public {$prefix}{$superClass}
+{$classDef}
+class {$prefix}{className} : public UXUnrealGameInstance
 {
 	GENERATED_BODY()
 	

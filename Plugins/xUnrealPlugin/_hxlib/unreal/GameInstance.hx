@@ -4,13 +4,14 @@ import cpp.ConstCharStar;
 import cpp.ConstCharStar;
 import cpp.NativeString;
 import cpp.Pointer;
+import lib.utils.ObjUtils;
 import unreal.GEngine;
 import unreal.UExposed.Bridge;
 import unreal.UExposed.UClass;
-import unreal.UObject;
+import unreal.types.DynamicWrapper;
 
 @:nogenerate 
-class GameInstance extends UObject implements UClass implements Bridge 
+class GameInstance extends UObjectBase implements UClass implements Bridge 
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -27,6 +28,7 @@ class GameInstance extends UObject implements UClass implements Bridge
 	public function setOwner(owner:cpp.Star<cpp.Void>)
 	{
 		this.owner = Pointer.fromStar(owner);
+		UObjectBase.setDelegateOwners(this);
 	}
 
 	public function Init()
@@ -35,6 +37,21 @@ class GameInstance extends UObject implements UClass implements Bridge
 
 	public function Shutdown()
 	{
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@:noCompletion
+	public function incomingDelegate(delegateName:String,numParams:Int=0,param1:cpp.Star<DynamicWrapper>,param2:cpp.Star<DynamicWrapper>,param3:cpp.Star<DynamicWrapper>)
+	{
+		UObjectBase.processIncomingDelegate(this, 
+		{
+			delegateName:delegateName,
+			numParams:numParams,
+			param1:param1,
+			param2:param2,
+			param3:param3
+		});
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

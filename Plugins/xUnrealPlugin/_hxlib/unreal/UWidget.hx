@@ -4,7 +4,7 @@ import unreal.UExposed.Bridge;
 import unreal.UExposed.UClass;
 
 @:nogenerate
-class UWidget extends unreal.UObject implements UClass implements Bridge 
+class UWidget extends UObjectBase implements UClass implements Bridge 
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,6 +16,7 @@ class UWidget extends unreal.UObject implements UClass implements Bridge
 	public function setOwner(owner:cpp.Star<cpp.Void>)
 	{
 		this.owner = cpp.Pointer.fromStar(owner);
+		UObjectBase.setDelegateOwners(this);
 	}
 
 	public function new()

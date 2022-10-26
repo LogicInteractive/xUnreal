@@ -18,5 +18,6 @@ interface UClass{}
 @:autoBuild(XUnreal.buildTemplates("A"))
 interface AClass{}
 
+@:nogenerate
 @:autoBuild(HaxeCBridge.expose())
 interface Bridge{}

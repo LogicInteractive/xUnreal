@@ -1,0 +1,29 @@
+package app.test;
+
+import unreal.UserWidget;
+
+class TestWidget extends UserWidget
+{
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@:uproperty(EditAnywhere, BlueprintReadOnly)
+	public var testvalue			: Float;
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+    public function new()
+	{
+		super();
+    }
+
+	override public function NativeConstruct()
+	{
+	}
+
+	override public function Tick(InDeltaTime:Float)
+	{
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+}
+

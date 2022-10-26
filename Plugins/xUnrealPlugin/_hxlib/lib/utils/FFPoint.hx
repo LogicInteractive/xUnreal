@@ -1,14 +1,17 @@
-package unreal;
+package lib.utils;
+import lib.FastFloat;
 
-class UObject extends unreal.UExposed 
+class FFPoint
 {
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public function new()
-	{
-		super();
-	}
+	// public var x
 
 	/////////////////////////////////////////////////////////////////////////////////////
+}
 
+typedef FFPoint2D =
+{
+	x	: FastFloat,		
+	y	: FastFloat		
 }
