@@ -23,6 +23,7 @@ This project aims to be able to:
 - Make your Haxe code supplement Blueprints / C++ - it is not intended to replace them.
 - Compatible with UE5
 - Compile Haxe code fast to a static library that can be included and used within Unreal
+- Provide basic communication back / to UE and C++ / Blueprints
 - Be portable and be able to compile the Unreal project without having Haxe or the Haxe source code
 - Work with any version of Unreal Engine
 - Be extendable
