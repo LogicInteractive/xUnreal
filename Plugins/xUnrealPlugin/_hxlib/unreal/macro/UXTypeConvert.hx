@@ -207,6 +207,104 @@ class UXTypeConvert
 		return null;
 	}
 
+	static public function swapFunctionTypes(bf)
+	{
+		var func = switch(bf.kind)
+		{
+			case FFun(f):f;
+			default:null;
+		}				
+		if (func!=null)
+		{
+			if (func.args!=null)
+			{
+				for (a in func.args)
+				{
+					if (a!=null)
+					{
+						if (a.type!=null)
+						{
+							var tp = switch(a.type)
+							{
+								case TPath(t):t;
+								default:null;
+							}
+							if (tp.name=="Array")
+							{
+								var prp:Array<Dynamic> = tp.params;
+								for (rtp in prp)
+								{
+									var tpt = switch(rtp)
+									{
+										case TPType(f):f;
+										default:null;
+									}
+									if (tpt!=null)
+									{
+										var tftptp = switch(tpt)
+										{
+											case TPath(f):f;
+											default:null;
+										}
+										switch (tftptp.name)
+										{
+											case "Int"		: a.type = macro : AIntArray;
+											case "Float"	: a.type = macro : AFloatArray;
+											case "String"	: a.type = macro : AStringArray;
+											case _ 		:
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (func.ret!=null)
+			{
+				var pms:Array<Dynamic> = func.ret.getParameters();
+				if (pms!=null)
+				{
+					for (p in pms)
+					{
+						if (p!=null)
+						{
+							if (p.name=="Array")
+							{
+								var prp:Array<Dynamic> = p.params;
+								for (rtp in prp)
+								{
+									var tpt = switch(rtp)
+									{
+										case TPType(f):f;
+										default:null;
+									}
+									if (tpt!=null)
+									{
+										var tftptp = switch(tpt)
+										{
+											case TPath(f):f;
+											default:null;
+										}
+										switch (tftptp.name)
+										{
+											case "Int"		: func.ret = macro : AIntArray;
+											case "Float"	: func.ret = macro : AFloatArray;
+											case "String"	: func.ret = macro : AStringArray;
+											case _ 		:
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}	
+
 	static public function hxToUEReturnType(hxrt:String):String
 	{
 		return switch(hxrt)
@@ -218,9 +316,9 @@ class UXTypeConvert
 			case "Bool"			: "bool";
 			case "Vector3"		: "FVector";
 			case "Vector2D"		: "FVector2D";
-			case "IntArray"		: "TArray<int>";
-			case "FloatArray"	: "TArray<double>";
-			case "StringArray"	: "TArray<FString>";
+			case "AIntArray"	: "TArray<int>";
+			case "AFloatArray"	: "TArray<double>";
+			case "AStringArray"	: "TArray<FString>";
 			case "Void"			: "void";
 			case ""				: "void";
 			default: hxrt;
@@ -236,9 +334,9 @@ class UXTypeConvert
 			case "String"		: 'TCHAR_TO_UTF8(*$val)';
 			case "Vector2D"		: '_UEToHaxeVector2D($val)';
 			case "Vector3"		: '_UEToHaxeVector3($val)';
-			case "IntArray"		: '_UEToHaxeIntArray($val)';
-			case "FloatArray"	: '_UEToHaxeFloatArray($val)';
-			case "StringArray"	: '_UEToHaxeStringArray($val)';
+			case "AIntArray"	: '_UEToHaxeIntArray($val)';
+			case "AFloatArray"	: '_UEToHaxeFloatArray($val)';
+			case "AStringArray"	: '_UEToHaxeStringArray($val)';
 			case "Dynamic"		: '_UEToHaxeObject($val)';
 			default: val;
 		}
@@ -297,7 +395,7 @@ class UXTypeConvert
 				default: "";
 			}
 		}
-		else if (hxType=="IntArray")
+		else if (hxType=="AIntArray")
 		{
 			return switch(ueType)
 			{
@@ -305,7 +403,7 @@ class UXTypeConvert
 				default: "";
 			}
 		}
-		else if (hxType=="FloatArray")
+		else if (hxType=="AFloatArray")
 		{
 			return switch(ueType)
 			{
@@ -313,7 +411,7 @@ class UXTypeConvert
 				default: "";
 			}
 		}
-		else if (hxType=="StringArray")
+		else if (hxType=="AStringArray")
 		{
 			return switch(ueType)
 			{

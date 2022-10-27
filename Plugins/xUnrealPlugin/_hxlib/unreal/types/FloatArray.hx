@@ -57,5 +57,25 @@ extern class FloatArray
 		h.v_length = array.length;
 		return h;	
 	}
+}
 
+abstract AFloatArray(FloatArray) from FloatArray to FloatArray
+{
+	inline function new(i:FloatArray)
+	{
+		this = i;
+	}
+
+	@:from
+	static public function fromArray(i:Array<Float>)
+	{
+		return new AFloatArray(FloatArray.create(i));
+	}
+
+	@:to
+	public function toArray():Array<Float>
+	{
+		var a = this.toArray(true);
+		return a;
+	}
 }

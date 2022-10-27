@@ -57,6 +57,24 @@ extern class IntArray
 		h.v_length = array.length;
 		return h;	
 	}
+}
 
+abstract AIntArray(IntArray) from IntArray to IntArray
+{
+	inline function new(i:IntArray)
+	{
+		this = i;
+	}
 
+	@:from
+	static public function fromArray(i:Array<Int>)
+	{
+		return new AIntArray(IntArray.create(i));
+	}
+
+	@:to
+	public function toArray():Array<Int>
+	{
+		return this.toArray(true);
+	}
 }

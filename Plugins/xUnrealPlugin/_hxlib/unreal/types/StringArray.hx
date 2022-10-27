@@ -65,5 +65,25 @@ extern class StringArray
 		h.v_length = array.length;
 		return h;	
 	}
+}
 
+
+abstract AStringArray(StringArray) from StringArray to StringArray
+{
+	inline function new(i:StringArray)
+	{
+		this = i;
+	}
+
+	@:from
+	static public function fromArray(i:Array<String>)
+	{
+		return new AStringArray(StringArray.create(i));
+	}
+
+	@:to
+	public function toArray():Array<String>
+	{
+		return this.toArray(true);
+	}
 }

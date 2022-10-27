@@ -180,6 +180,7 @@ class XUnreal
 						if (fm.params.length>0)
 							metaParams = UXClassAnalyzer.extractMetaParams(fm.params);
 
+						UXTypeConvert.swapFunctionTypes(bf);						
 						var hxAtype:Array<RetArg> = UXTypeConvert.extractInputTypesStr(bf);						
 						var ueAgruments:String = UXTypeConvert.extractUEArgumentsStr(hxAtype);
 						var hxRtype:String = UXTypeConvert.extractReturnTypeStr(bf);
