@@ -5,7 +5,7 @@
 
   
 
-This project is a prototype of interoperable Haxe development in Unreal Engine.
+This project is a prototype of a way to do interoperable Haxe development in Unreal Engine.
 
 ![image](https://user-images.githubusercontent.com/1677550/176910275-edd9ab7a-57d5-465d-a80a-549ccb7d218a.png)
 
