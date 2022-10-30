@@ -29,7 +29,7 @@ This project aims to be able to:
 - Be fast, convenient and easy to work with
 - Provide optional simplified actions for easier Unreal development
 - Use hxcpp with Unreal to make Haxe code run at native speed
-- Add support for macrogenerated unreal delegates created behind the scenes from Haxe.
+- Add support for unreal delegates in a very convenient way using Haxe macros. 
 
 #  Some examples of some basic usage below :
 
