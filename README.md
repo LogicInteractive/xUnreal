@@ -66,6 +66,7 @@ class TestActor extends unreal.Actor
 
 	override public function BeginPlay()
 	{
+		myEvent.add(delegateReceiver);
 		y  = (Math.random()*800)-400;
 		x  = (Math.random()*800)-400;
 		speed  =  0.1+(Math.random()*2);
@@ -88,6 +89,11 @@ class TestActor extends unreal.Actor
 		
 		super.Tick(deltaSeconds);
 	}
+
+	function delegateReceiver(value:Int)
+	{
+		trace(value);
+	} 
 }
 
 class TestLevel2 extends LevelScriptActor
