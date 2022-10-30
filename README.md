@@ -160,9 +160,9 @@ class TestUserWidget extends unreal.UserWidget
 	}
 
 	@:ufunction(BlueprintCallable)
-	public function getSomeFloat():Float
+	public function getSomeFloats():Array<Float>
 	{
-		return Math.random();
+		return [0.1,0.2,0.3,0.4];
 	}
 
 	@:ufunction(BlueprintPure,CallInEditor)
