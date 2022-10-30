@@ -19,7 +19,7 @@ If you need heavy unreal specific code, this has to be manually tied in, or just
 
 This project aims to be able to:
 
-- Provide fast Unreal compilation, since only changing @:uclass / @:ufunction / @:property fields will trigger the need for recompilation of those classes 
+- Provide fast Unreal compilation, since only changing @:uclass / @:ufunction / @:uproperty fields will trigger the need for recompilation of those classes 
 - Make your Haxe code supplement Blueprints / C++ - it is not intended to replace them.
 - Compile Haxe code fast to a static library that can be included and used within Unreal
 - Provide basic communication back / to UE and C++ / Blueprints
